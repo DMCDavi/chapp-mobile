@@ -1,0 +1,7 @@
+{
+  "name": "chapp-mobile",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
