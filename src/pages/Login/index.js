@@ -1,4 +1,4 @@
-import { IonContent, IonPage, IonImg } from '@ionic/react'
+import { IonContent, IonPage, IonImg, IonAlert } from '@ionic/react'
 import { TextField, Button, FormControl, Grid, CircularProgress } from '@material-ui/core';
 import React, { useState } from 'react'
 import useStyles from './style'
@@ -8,6 +8,11 @@ import { login } from '../../utils/storage';
 function Login({ history }) {
   const classes = useStyles();
   const [loading, setLoading] = useState(false)
+  const [showAlert1, setShowAlert1] = useState(false)
+  const [showAlert2, setShowAlert2] = useState(false)
+  const [alertSubtitle, setAlertSubtitle] = useState("")
+  const [alertTitle, setAlertTitle] = useState("")
+  const [alertMsg, setAlertMsg] = useState("")
   const [code, setCode] = useState("")
   const [codeError, setCodeError] = useState(false)
   const [codeHelper, setCodeHelper] = useState("")
@@ -62,6 +67,30 @@ function Login({ history }) {
     }
   }
 
+  const createAccount = async () => {
+
+    setShowAlert1(false)
+
+    await ApiService.Register()
+      .then(res => {
+        setAlertTitle("Conta criada com sucesso!")
+        setAlertSubtitle("Salve essas informações com segurança")
+        setAlertMsg(`Código: <strong>${res.data._id}</strong>
+                      <br/>
+                      Senha: <strong>${res.data.password}</strong>`)
+        setCode(res.data._id)
+        setPassword(res.data.password)
+      })
+      .catch(err => {
+        setAlertTitle("Ocorreu um erro")
+        setAlertSubtitle("Por favor tente novamente mais tarde")
+        setAlertMsg("")
+      })
+
+    setShowAlert2(true)
+
+  }
+
   const handleCode = (txt) => {
     setCodeError(false)
     setCodeHelper("")
@@ -85,6 +114,7 @@ function Login({ history }) {
             label="Código"
             variant="outlined"
             className={classes.input}
+            value={code}
             onChange={(e) => handleCode(e.target.value)}
           />
           <TextField
@@ -95,6 +125,7 @@ function Login({ history }) {
             variant="outlined"
             type="password"
             className={classes.input}
+            value={password}
             onChange={(e) => handlePassword(e.target.value)}
           />
           {
@@ -109,10 +140,42 @@ function Login({ history }) {
           }
         </FormControl>
         <Grid container justify='center'>
-          <Button variant="text" color="primary" size="small">
+          <Button variant="text" color="primary" size="small" onClick={() => setShowAlert1(true)}>
             Não tenho conta
           </Button>
         </Grid>
+        <IonAlert
+          isOpen={showAlert1}
+          onDidDismiss={() => setShowAlert1(false)}
+          header={"Deseja criar uma conta?"}
+          message={"Clique em <strong>SIM</strong> para gerar aleatoriamente sua conta ou clique em <strong>NÃO</strong> para cancelar"}
+          buttons={[
+            {
+              text: "SIM",
+              handler: () =>
+                createAccount()
+            },
+            {
+              text: "NÃO",
+              handler: () =>
+                setShowAlert1(false)
+            }
+          ]}
+        />
+        <IonAlert
+          isOpen={showAlert2}
+          onDidDismiss={() => setShowAlert2(false)}
+          header={alertTitle}
+          subHeader={alertSubtitle}
+          message={alertMsg}
+          buttons={[
+            {
+              text: "OK",
+              handler: () =>
+                setShowAlert2(false)
+            }
+          ]}
+        />
       </IonContent>
     </IonPage>
   );
