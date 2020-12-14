@@ -11,6 +11,17 @@ const ApiService = {
             .catch(err =>
                 Promise.reject(err)
             )
+    },
+
+    Register: () => {
+        return api
+            .post("/collaborator")
+            .then(res =>
+                Promise.resolve(res)
+            )
+            .catch(err =>
+                Promise.reject(err)
+            )
     }
 
 }
