@@ -9,7 +9,8 @@ const useStyles = makeStyles(() => ({
     },
     formControl: {
         paddingRight: 20,
-        paddingLeft: 20
+        paddingLeft: 20,
+        marginTop: 20
     }
 }));
 
