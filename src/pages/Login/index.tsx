@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import useStyles from './style'
 import ApiService from '../../services/api.service'
 import { RouteComponentProps } from 'react-router';
+import { login } from '../../utils/storage';
 
 interface ContainerProps extends RouteComponentProps { }
 
@@ -17,7 +18,7 @@ const Login: React.FC<ContainerProps> = ({ history }) => {
   const [passwordError, setPasswordError] = useState(false)
   const [passwordHelper, setPasswordHelper] = useState("")
 
-  const login = async () => {
+  const handleLogin = async () => {
 
     setCodeError(false)
     setPasswordError(false)
@@ -42,6 +43,7 @@ const Login: React.FC<ContainerProps> = ({ history }) => {
 
       await ApiService.Login(credential)
         .then(res => {
+          login(res.data.access_token, code)
           setLoading(false)
           history.push("/home")
         })
@@ -104,7 +106,7 @@ const Login: React.FC<ContainerProps> = ({ history }) => {
                 <CircularProgress className={classes.button} />
               </Grid>
               :
-              <Button variant="contained" color="primary" size="large" className={classes.button} onClick={login}>
+              <Button variant="contained" color="primary" size="large" className={classes.button} onClick={handleLogin}>
                 Entrar
           </Button>
           }
