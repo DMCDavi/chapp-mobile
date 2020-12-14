@@ -1,5 +1,5 @@
 import { IonHeader, IonToolbar, IonPage, IonTitle, IonContent } from '@ionic/react'
-import { FormControl, TextField, Button, InputAdornment, FormHelperText, Grid } from '@material-ui/core'
+import { FormControl, TextField, Button, InputAdornment, FormHelperText, Grid, CircularProgress } from '@material-ui/core'
 import React, { useState } from 'react'
 import ApiService from '../../services/api.service'
 import useStyles from '../style'
@@ -14,6 +14,7 @@ function AddHealthCheckUp() {
     const [pulse, setPulse] = useState("")
     const [SBP, setSBP] = useState("")
     const [DBP, setDBP] = useState("")
+    const [loading, setLoading] = useState(false)
     const [success, setSuccess] = useState(false)
     const [error, setError] = useState(false)
     const [errorMsg, setErrorMsg] = useState("")
@@ -25,6 +26,8 @@ function AddHealthCheckUp() {
             setError(true)
             return
         }
+
+        setLoading(true)
 
         const data = {
             weight,
@@ -46,6 +49,8 @@ function AddHealthCheckUp() {
                     setErrorMsg("Ocorreu um erro, por favor tente mais tarde")
                 setError(true)
             })
+
+        setLoading(false)
 
     }
 
@@ -150,9 +155,16 @@ function AddHealthCheckUp() {
                             endAdornment: <InputAdornment position="end">mmHg</InputAdornment>,
                         }}
                     />
-                    <Button variant="contained" color="primary" size="large" className={classes.button} onClick={createCheckUp}>
-                        Salvar
-                    </Button>
+                    {
+                        loading ?
+                            <Grid container justify='center'>
+                                <CircularProgress className={classes.button} />
+                            </Grid>
+                            :
+                            <Button variant="contained" color="primary" size="large" className={classes.button} onClick={createCheckUp}>
+                                Salvar
+                            </Button>
+                    }
                     {
                         error ?
                             <Grid container justify='center'>
