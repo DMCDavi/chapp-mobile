@@ -22,6 +22,17 @@ const ApiService = {
             .catch(err =>
                 Promise.reject(err)
             )
+    },
+
+    CreateCheckUp: (data) => {
+        return api
+            .post("/health-check-up", data)
+            .then(res =>
+                Promise.resolve(res)
+            )
+            .catch(err =>
+                Promise.reject(err)
+            )
     }
 
 }
