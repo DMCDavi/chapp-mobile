@@ -2,7 +2,7 @@ import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonFab, IonFabBut
 import React from 'react';
 import { add } from 'ionicons/icons';
 
-function Home() {
+function Home({history}) {
   return (
     <IonPage>
       <IonHeader>
@@ -12,7 +12,7 @@ function Home() {
       </IonHeader>
       <IonContent fullscreen>
         <IonFab vertical="bottom" horizontal="end" slot="fixed">
-          <IonFabButton>
+          <IonFabButton onClick={() => history.push("/add-checkup")}>
             <IonIcon icon={add} />
           </IonFabButton>
         </IonFab>
