@@ -33,6 +33,17 @@ const ApiService = {
             .catch(err =>
                 Promise.reject(err)
             )
+    },
+
+    GetCollaboratorCheackUps: (id) => {
+        return api
+            .get(`/collaborator/${id}`)
+            .then(res =>
+                Promise.resolve(res)
+            )
+            .catch(err =>
+                Promise.reject(err)
+            )
     }
 
 }
