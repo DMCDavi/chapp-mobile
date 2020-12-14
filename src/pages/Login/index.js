@@ -1,14 +1,11 @@
-import { IonContent, IonInput, IonPage, IonButton, IonImg } from '@ionic/react'
+import { IonContent, IonPage, IonImg } from '@ionic/react'
 import { TextField, Button, FormControl, Grid, CircularProgress } from '@material-ui/core';
 import React, { useState } from 'react'
 import useStyles from './style'
 import ApiService from '../../services/api.service'
-import { RouteComponentProps } from 'react-router';
 import { login } from '../../utils/storage';
 
-interface ContainerProps extends RouteComponentProps { }
-
-const Login: React.FC<ContainerProps> = ({ history }) => {
+function Login({ history }) {
   const classes = useStyles();
   const [loading, setLoading] = useState(false)
   const [code, setCode] = useState("")
@@ -65,13 +62,13 @@ const Login: React.FC<ContainerProps> = ({ history }) => {
     }
   }
 
-  const handleCode = (txt: string) => {
+  const handleCode = (txt) => {
     setCodeError(false)
     setCodeHelper("")
     setCode(txt)
   }
 
-  const handlePassword = (txt: string) => {
+  const handlePassword = (txt) => {
     setPasswordError(false)
     setPassword(txt)
   }
