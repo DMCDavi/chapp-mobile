@@ -7,6 +7,11 @@ const useStyles = makeStyles((theme) => ({
     },
     nested: {
         paddingLeft: theme.spacing(4),
+    },
+    emptyText: {
+        textAlign: 'center',
+        fontSize: 20,
+        padding: 50
     }
 }));
 
