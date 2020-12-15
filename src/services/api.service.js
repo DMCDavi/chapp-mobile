@@ -55,6 +55,17 @@ const ApiService = {
             .catch(err =>
                 Promise.reject(err)
             )
+    },
+
+    UpdateCheckUp: (id, data) => {
+        return api
+            .put(`/health-check-up/${id}`, data)
+            .then(res =>
+                Promise.resolve(res)
+            )
+            .catch(err =>
+                Promise.reject(err)
+            )
     }
 
 }
