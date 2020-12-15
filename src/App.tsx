@@ -26,6 +26,7 @@ import './theme/variables.css';
 import Login from './pages/Login';
 import PrivateRoute from './routes/PrivateRoute';
 import AddHealthCheckUp from './pages/AddHealthCheckUp';
+import { isLogin } from './utils/storage';
 
 const App: React.FC = () => (
   <IonApp>
@@ -35,7 +36,7 @@ const App: React.FC = () => (
         <PrivateRoute path="/add-checkup" component={AddHealthCheckUp} exact={true} />
         <PrivateRoute path="/add-checkup/:data" component={AddHealthCheckUp} exact={true} />
         <Route path="/login" component={Login} exact={true} />
-        <Route exact path="/" render={() => <Redirect to="/login" />} />
+        <Route exact path="/" render={() => <Redirect to={isLogin() ? "/home" : "/login"} />} />
       </IonRouterOutlet>
     </IonReactRouter>
   </IonApp>

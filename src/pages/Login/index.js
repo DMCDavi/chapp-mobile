@@ -102,6 +102,7 @@ function Login({ history }) {
 
   const handlePassword = (txt) => {
     setPasswordError(false)
+    setPasswordHelper("")
     setPassword(txt)
   }
 
