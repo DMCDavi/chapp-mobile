@@ -1,6 +1,6 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonFab, IonFabButton, IonIcon, useIonViewWillEnter, IonAlert } from '@ionic/react';
 import React, { useState } from 'react';
-import { add } from 'ionicons/icons';
+import { add, trashOutline, pencilSharp } from 'ionicons/icons';
 import ApiService from '../../services/api.service';
 import { getId } from '../../utils/storage';
 import { List, Grid, Typography } from '@material-ui/core';
@@ -13,6 +13,7 @@ function Home({ history }) {
 
   const [checkUps, setCheckUps] = useState([])
   const [showAlert, setShowAlert] = useState(false)
+  const [selectedCheckUp, setSelectedCheckUp] = useState("")
 
   useIonViewWillEnter(() => {
     getHealthCheckUps()
@@ -28,6 +29,20 @@ function Home({ history }) {
       })
   }
 
+  const deleteCheckUp = async () => {
+
+    await ApiService.DeleteCheckUp(selectedCheckUp)
+      .then(res => {
+        const index = checkUps.findIndex(e => e._id === selectedCheckUp)
+        checkUps.splice(index, 1)
+        setCheckUps([...checkUps])
+        setSelectedCheckUp("")
+      })
+      .catch(err => {
+        setShowAlert(true)
+      })
+  }
+
   return (
     <IonPage>
       <IonHeader>
@@ -36,23 +51,39 @@ function Home({ history }) {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        <IonFab vertical="bottom" horizontal="end" slot="fixed">
-          <IonFabButton onClick={() => history.push("/add-checkup")}>
-            <IonIcon icon={add} />
-          </IonFabButton>
-        </IonFab>
+        {
+          !selectedCheckUp ?
+            <IonFab vertical="bottom" horizontal="end" slot="fixed">
+              <IonFabButton onClick={() => history.push("/add-checkup")}>
+                <IonIcon icon={add} />
+              </IonFabButton>
+            </IonFab>
+            :
+            <>
+              <IonFab vertical="bottom" horizontal="start" slot="fixed">
+                <IonFabButton color="danger" onClick={deleteCheckUp}>
+                  <IonIcon icon={trashOutline} />
+                </IonFabButton>
+              </IonFab>
+              <IonFab vertical="bottom" horizontal="end" slot="fixed">
+                <IonFabButton color="light">
+                  <IonIcon icon={pencilSharp} />
+                </IonFabButton>
+              </IonFab>
+            </>
+        }
         {
           checkUps && checkUps.length > 0 ?
             <List className={localClasses.list}>
               {checkUps.map((item) =>
-                <CheckUpListItem checkUp={item} />
+                <CheckUpListItem checkUp={item} select={setSelectedCheckUp} />
               )}
             </List>
             :
             <Grid container justify='center'>
               <Typography variant="body1" className={localClasses.emptyText}>
                 Você ainda não possui nenhum exame médico cadastrado, faça o seu primeiro agora! Basta clicar no botão abaixo.
-          </Typography>
+              </Typography>
             </Grid>
         }
         <IonAlert

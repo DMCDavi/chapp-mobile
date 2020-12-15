@@ -4,14 +4,22 @@ import React, { useState } from 'react'
 import { chevronDownOutline, chevronUpOutline } from 'ionicons/icons';
 import useStyles from '../style'
 
-function CheckUpListItem({ checkUp }) {
+function CheckUpListItem({ checkUp, select }) {
 
     const localClasses = useStyles()
     const [open, setOpen] = useState(false)
 
+    const selectCheckUp = () => {
+        setOpen(!open)
+        if (!open)
+            select(checkUp._id)
+        else
+            select("")
+    }
+
     return (
         <>
-            <ListItem button onClick={() => setOpen(!open)}>
+            <ListItem button onClick={selectCheckUp}>
                 <ListItemText primary={`ID: ${checkUp._id}`} secondary={new Date(checkUp.createdAt).toLocaleString()} />
                 {open ? <IonIcon icon={chevronUpOutline} /> : <IonIcon icon={chevronDownOutline} />}
             </ListItem>
