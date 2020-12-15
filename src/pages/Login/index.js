@@ -1,12 +1,15 @@
 import { IonContent, IonPage, IonImg, IonAlert } from '@ionic/react'
 import { TextField, Button, FormControl, Grid, CircularProgress } from '@material-ui/core';
 import React, { useState } from 'react'
-import useStyles from './style'
+import useLocalStyles from './style'
+import useStyles from '../style'
 import ApiService from '../../services/api.service'
 import { login } from '../../utils/storage';
 
 function Login({ history }) {
   const classes = useStyles();
+  const localClasses= useLocalStyles();
+
   const [loading, setLoading] = useState(false)
   const [showAlert1, setShowAlert1] = useState(false)
   const [showAlert2, setShowAlert2] = useState(false)
@@ -106,7 +109,7 @@ function Login({ history }) {
   return (
     <IonPage>
       <IonContent >
-        <IonImg src="https://www.logopik.com/wp-content/uploads/edd/2018/07/Medicine-Logo-Vector-Design.png" className={classes.logo} />
+        <IonImg src="https://www.logopik.com/wp-content/uploads/edd/2018/07/Medicine-Logo-Vector-Design.png" className={localClasses.logo} />
         <FormControl className={classes.formControl} fullWidth={true}>
           <TextField
             error={codeError}

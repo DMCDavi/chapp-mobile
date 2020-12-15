@@ -9,3 +9,11 @@ export const isLogin = () => {
     }
     return false;
 }
+
+export const getToken = () => {
+    return localStorage.getItem("CHAPP-TOKEN");
+}
+
+export const getId = () => {
+    return localStorage.getItem("CHAPP-ID");
+}
