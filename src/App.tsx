@@ -33,6 +33,7 @@ const App: React.FC = () => (
       <IonRouterOutlet>
         <PrivateRoute path="/home" component={Home} exact={true} />
         <PrivateRoute path="/add-checkup" component={AddHealthCheckUp} exact={true} />
+        <PrivateRoute path="/add-checkup/:data" component={AddHealthCheckUp} exact={true} />
         <Route path="/login" component={Login} exact={true} />
         <Route exact path="/" render={() => <Redirect to="/login" />} />
       </IonRouterOutlet>

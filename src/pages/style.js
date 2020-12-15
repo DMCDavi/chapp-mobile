@@ -11,6 +11,11 @@ const useStyles = makeStyles(() => ({
         paddingRight: 20,
         paddingLeft: 20,
         marginTop: 20
+    },
+    warningText: {
+        textAlign: 'center',
+        fontSize: 20,
+        padding: 50
     }
 }));
 

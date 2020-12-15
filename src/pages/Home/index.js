@@ -5,11 +5,13 @@ import ApiService from '../../services/api.service';
 import { getId } from '../../utils/storage';
 import { List, Grid, Typography } from '@material-ui/core';
 import useLocalStyles from './style'
+import useStyles from '../style'
 import CheckUpListItem from './components/CheckUpListItem';
 
 function Home({ history }) {
 
   const localClasses = useLocalStyles();
+  const classes = useStyles()
 
   const [checkUps, setCheckUps] = useState([])
   const [showAlert, setShowAlert] = useState(false)
@@ -43,6 +45,14 @@ function Home({ history }) {
       })
   }
 
+  const navigateToUpdate = () => {
+
+    const foundCheckUp = checkUps.find(e => e._id === selectedCheckUp);
+    const checkUpString = JSON.stringify(foundCheckUp)
+    history.push(`/add-checkup/${checkUpString}`)
+
+  }
+
   return (
     <IonPage>
       <IonHeader>
@@ -66,7 +76,7 @@ function Home({ history }) {
                 </IonFabButton>
               </IonFab>
               <IonFab vertical="bottom" horizontal="end" slot="fixed">
-                <IonFabButton color="light">
+                <IonFabButton color="light" onClick={navigateToUpdate}>
                   <IonIcon icon={pencilSharp} />
                 </IonFabButton>
               </IonFab>
@@ -81,7 +91,7 @@ function Home({ history }) {
             </List>
             :
             <Grid container justify='center'>
-              <Typography variant="body1" className={localClasses.emptyText}>
+              <Typography variant="body1" className={classes.warningText}>
                 Você ainda não possui nenhum exame médico cadastrado, faça o seu primeiro agora! Basta clicar no botão abaixo.
               </Typography>
             </Grid>
