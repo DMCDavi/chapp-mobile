@@ -25,6 +25,7 @@ import './theme/variables.css';
 
 import Login from './pages/Login';
 import PrivateRoute from './routes/PrivateRoute';
+import { isLogin } from './utils/storage';
 
 const App: React.FC = () => (
   <IonApp>
@@ -32,7 +33,7 @@ const App: React.FC = () => (
       <IonRouterOutlet>
         <PrivateRoute path="/home" component={Home} exact={true} />
         <Route path="/login" component={Login} exact={true} />
-        <Route exact path="/" render={() => <Redirect to="/login" />} />
+        <Route exact path="/" render={() => <Redirect to={isLogin() ? "/home" : "/login"} />} />
       </IonRouterOutlet>
     </IonReactRouter>
   </IonApp>
