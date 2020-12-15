@@ -14,7 +14,8 @@ function Home({ history }) {
   const classes = useStyles()
 
   const [checkUps, setCheckUps] = useState([])
-  const [showAlert, setShowAlert] = useState(false)
+  const [showErrorAlert, setShowErrorAlert] = useState(false)
+  const [showDeleteAlert, setShowDeleteAlert] = useState(false)
   const [selectedCheckUp, setSelectedCheckUp] = useState("")
 
   useIonViewWillEnter(() => {
@@ -27,7 +28,7 @@ function Home({ history }) {
         setCheckUps(res.data.healthCheckUps.reverse())
       })
       .catch(err => {
-        setShowAlert(true)
+        setShowErrorAlert(true)
       })
   }
 
@@ -41,7 +42,7 @@ function Home({ history }) {
         setSelectedCheckUp("")
       })
       .catch(err => {
-        setShowAlert(true)
+        setShowErrorAlert(true)
       })
   }
 
@@ -71,7 +72,7 @@ function Home({ history }) {
             :
             <>
               <IonFab vertical="bottom" horizontal="start" slot="fixed">
-                <IonFabButton color="danger" onClick={deleteCheckUp}>
+                <IonFabButton color="danger" onClick={() => setShowDeleteAlert(true)}>
                   <IonIcon icon={trashOutline} />
                 </IonFabButton>
               </IonFab>
@@ -97,15 +98,34 @@ function Home({ history }) {
             </Grid>
         }
         <IonAlert
-          isOpen={showAlert}
-          onDidDismiss={() => setShowAlert(false)}
+          isOpen={showErrorAlert}
+          onDidDismiss={() => setShowErrorAlert(false)}
           header="Ocorreu um erro"
           subHeader="Por favor tente novamente mais tarde"
           buttons={[
             {
               text: "OK",
               handler: () =>
-                setShowAlert(false)
+                setShowErrorAlert(false)
+            }
+          ]}
+        />
+        <IonAlert
+          isOpen={showDeleteAlert}
+          onDidDismiss={() => setShowDeleteAlert(false)}
+          header="Deseja realmente excluir este exame?"
+          subHeader={`ID do exame: ${selectedCheckUp}`}
+          message="Clique em <strong>SIM</strong> para confirmar a exclusão do exame selecionado ou clique em <strong>NÃO</strong> para cancelar"
+          buttons={[
+            {
+              text: "SIM",
+              handler: () =>
+                deleteCheckUp()
+            },
+            {
+              text: "NÃO",
+              handler: () =>
+                setShowDeleteAlert(false)
             }
           ]}
         />
