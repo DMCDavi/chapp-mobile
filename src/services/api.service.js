@@ -44,6 +44,17 @@ const ApiService = {
             .catch(err =>
                 Promise.reject(err)
             )
+    },
+
+    DeleteCheckUp: (id) => {
+        return api
+            .delete(`/health-check-up/${id}`)
+            .then(res =>
+                Promise.resolve(res)
+            )
+            .catch(err =>
+                Promise.reject(err)
+            )
     }
 
 }
