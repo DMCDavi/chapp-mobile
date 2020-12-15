@@ -10,6 +10,11 @@ export const isLogin = () => {
     return false;
 }
 
+export const logout = () => {
+    localStorage.removeItem("CHAPP-TOKEN");
+    localStorage.removeItem("CHAPP-ID");
+  };
+
 export const getToken = () => {
     return localStorage.getItem("CHAPP-TOKEN");
 }

@@ -1,8 +1,8 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonFab, IonFabButton, IonIcon, useIonViewWillEnter, IonAlert } from '@ionic/react';
 import React, { useState } from 'react';
-import { add, trashOutline, pencilSharp } from 'ionicons/icons';
+import { add, trashOutline, pencilSharp, logOutOutline } from 'ionicons/icons';
 import ApiService from '../../services/api.service';
-import { getId } from '../../utils/storage';
+import { getId, logout } from '../../utils/storage';
 import { List, Grid, Typography } from '@material-ui/core';
 import useLocalStyles from './style'
 import useStyles from '../style'
@@ -54,6 +54,11 @@ function Home({ history }) {
 
   }
 
+  const exit = () => {
+    logout();
+    history.push("/login")
+  }
+
   return (
     <IonPage>
       <IonHeader>
@@ -64,11 +69,18 @@ function Home({ history }) {
       <IonContent fullscreen>
         {
           !selectedCheckUp ?
-            <IonFab vertical="bottom" horizontal="end" slot="fixed">
-              <IonFabButton onClick={() => history.push("/add-checkup")}>
-                <IonIcon icon={add} />
-              </IonFabButton>
-            </IonFab>
+            <>
+              <IonFab vertical="bottom" horizontal="start" slot="fixed">
+                <IonFabButton color="danger" onClick={exit}>
+                  <IonIcon icon={logOutOutline} />
+                </IonFabButton>
+              </IonFab>
+              <IonFab vertical="bottom" horizontal="end" slot="fixed">
+                <IonFabButton onClick={() => history.push("/add-checkup")}>
+                  <IonIcon icon={add} />
+                </IonFabButton>
+              </IonFab>
+            </>
             :
             <>
               <IonFab vertical="bottom" horizontal="start" slot="fixed">
