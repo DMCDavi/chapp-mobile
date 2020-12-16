@@ -105,7 +105,7 @@ function Home({ history }) {
             :
             <Grid container justify='center'>
               <Typography variant="body1" className={classes.warningText}>
-                Você ainda não possui nenhum exame médico cadastrado, faça o seu primeiro agora! Basta clicar no botão abaixo.
+                Você ainda não possui nenhum exame médico cadastrado, faça o seu primeiro agora! Basta clicar no botão com sinal de mais abaixo.
               </Typography>
             </Grid>
         }
