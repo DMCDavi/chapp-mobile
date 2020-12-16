@@ -1,4 +1,4 @@
-import { IonHeader, IonToolbar, IonPage, IonTitle, IonContent, useIonViewWillEnter } from '@ionic/react'
+import { IonButtons, IonBackButton, IonHeader, IonToolbar, IonPage, IonTitle, IonContent, useIonViewWillEnter } from '@ionic/react'
 import { FormControl, TextField, Button, InputAdornment, FormHelperText, Grid, CircularProgress, Typography } from '@material-ui/core'
 import React, { useState } from 'react'
 import ApiService from '../../services/api.service'
@@ -161,6 +161,9 @@ function AddHealthCheckUp({ match }) {
         <IonPage>
             <IonHeader>
                 <IonToolbar>
+                    <IonButtons slot="start">
+                        <IonBackButton defaultHref="/home" />
+                    </IonButtons>
                     <IonTitle>
                         Novo Exame
                     </IonTitle>
