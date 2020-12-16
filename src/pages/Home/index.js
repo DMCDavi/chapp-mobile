@@ -25,7 +25,7 @@ function Home({ history }) {
   const getHealthCheckUps = async () => {
     await ApiService.GetCollaboratorCheackUps(getId())
       .then(res => {
-        setCheckUps(res.data.healthCheckUps.reverse())
+        setCheckUps(res.data.healthCheckUps)
       })
       .catch(err => {
         setShowErrorAlert(true)
